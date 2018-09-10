@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void test() {
+        System.out.println("test");
+    }
+
     private void updateUI() {
         // If the list adapter is null, a new one will be instantiated and set on our list view.
         if (scoreAdapter == null) {

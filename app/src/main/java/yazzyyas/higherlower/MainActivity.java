@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView highscore;
     private int[] diceImages;
     private ImageView diceImageView;
+    private int scoreText = 0;
+    private int highscoreText = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         showScores = findViewById(R.id.list_view);
-        score = findViewById(R.id.scoreVar);
+        score = findViewById(R.id.scoreText);
+        highscore = findViewById(R.id.highscoreText);
         numbers = new ArrayList<>();
         scores = new ArrayList<>();
         diceImageView = findViewById(R.id.diceImage);
-
         diceImages = new int[]{R.drawable.d1, R.drawable.d2, R.drawable.d3, R.drawable.d4, R.drawable.d5, R.drawable.d6};
-
+        addItem();
         FloatingActionButton downFab = (FloatingActionButton) findViewById(R.id.downFab);
         downFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +60,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        // If the list adapter is null, a new one will be instantiated and set on our list view.
         if (scoreAdapter == null) {
-            // We can use ‘this’ for the context argument because an Activity is a subclass of the Context class.
-            // The ‘android.R.layout.simple_list_item_1’ argument refers to the simple_list_item_1 layout of the Android layout directory.
             scoreAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, scores);
             showScores.setAdapter(scoreAdapter);
         } else {
-            // When the adapter is not null, it has to know what to do when our dataset changes, when a change happens we need to call this method on the adapter so that it will update internally.
             scoreAdapter.notifyDataSetChanged();
         }
     }
@@ -74,20 +72,36 @@ public class MainActivity extends AppCompatActivity {
         Random random = new Random();
         int randomnumber = random.nextInt(6) + 1;
         numbers.add(randomnumber);
+        int previousNumber = (int) numbers.get(numbers.size() - 1);
 
         String newItem = "Throw is " + randomnumber;
         scores.add(newItem);
         diceImageView.setImageResource(diceImages[randomnumber - 1]);
         updateUI();
-        Toast.makeText(this, "Add item.", Toast.LENGTH_SHORT).show();
 
-//        int previousNumber = (int) numbers.get(numbers.size() - 2);
-//        System.out.println("previousnumber " + previousNumber);
-//        if (randomnumber <= previousNumber) {
-//            Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(this, "You won.", Toast.LENGTH_SHORT).show();
-//        }
+        System.out.println("previousnumber " + previousNumber);
+        if (randomnumber <= previousNumber) {
+            lost();
+            Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show();
+        } else {
+            updateScore();
+            Toast.makeText(this, "You won.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateScore() {
+        ++scoreText;
+        score.setText("Score: " + scoreText);
+
+        if (scoreText > highscoreText) {
+            highscoreText = scoreText;
+            highscore.setText("Highscore: " + highscoreText);
+        }
+    }
+
+    private void lost() {
+        scoreText = 0;
+        score.setText("Score: " + scoreText);
     }
 
     @Override

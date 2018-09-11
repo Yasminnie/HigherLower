@@ -3,6 +3,7 @@ package yazzyyas.higherlower;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView diceImageView;
     private int scoreText = 0;
     private int highscoreText = 0;
+    int previousNumber = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,18 @@ public class MainActivity extends AppCompatActivity {
         scores = new ArrayList<>();
         diceImageView = findViewById(R.id.diceImage);
         diceImages = new int[]{R.drawable.d1, R.drawable.d2, R.drawable.d3, R.drawable.d4, R.drawable.d5, R.drawable.d6};
-        addItem();
+
+        int randomnumber = generateNumber();
+        String newItem = "Throw is " + previousNumber;
+        scores.add(newItem);
+        diceImageView.setImageResource(diceImages[previousNumber - 1]);
+        updateUI();
+
         FloatingActionButton downFab = (FloatingActionButton) findViewById(R.id.downFab);
         downFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addItem();
+                downFab();
             }
         });
 
@@ -54,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         upFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addItem();
+                upFab();
             }
         });
     }
@@ -68,18 +76,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addItem() {
+    private int generateNumber() {
         Random random = new Random();
-        int randomnumber = random.nextInt(6) + 1;
-        numbers.add(randomnumber);
-        int previousNumber = (int) numbers.get(numbers.size() - 1);
+        int randomnummer = random.nextInt(6) + 1;
+        return randomnummer;
+    }
 
+    private void downFab() {
+        int randomnumber = generateNumber();
+        numbers.add(randomnumber);
+
+        Log.i("previousnumber ", "previousnumber " + previousNumber);
         String newItem = "Throw is " + randomnumber;
         scores.add(newItem);
         diceImageView.setImageResource(diceImages[randomnumber - 1]);
         updateUI();
 
-        System.out.println("previousnumber " + previousNumber);
+        if (randomnumber >= previousNumber) {
+            lost();
+            Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show();
+        } else {
+            updateScore();
+            Toast.makeText(this, "You won.", Toast.LENGTH_SHORT).show();
+        }
+        previousNumber = randomnumber;
+    }
+
+    private void upFab() {
+        int randomnumber = generateNumber();
+        numbers.add(randomnumber);
+
+        Log.i("previousnumber ", "previousnumber " + previousNumber);
+        String newItem = "Throw is " + randomnumber;
+        scores.add(newItem);
+        diceImageView.setImageResource(diceImages[randomnumber - 1]);
+        updateUI();
+
         if (randomnumber <= previousNumber) {
             lost();
             Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show();
@@ -87,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             updateScore();
             Toast.makeText(this, "You won.", Toast.LENGTH_SHORT).show();
         }
+        previousNumber = randomnumber;
     }
 
     private void updateScore() {

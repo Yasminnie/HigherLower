@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="8dp"
     android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="yazzyyas.higherlower.MainActivity"
@@ -13,45 +14,34 @@
         android:id="@+id/downFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="71dp"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/diceImage"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/ic_arrow_drop_down_white_24dp"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        app:layout_constraintRight_toLeftOf="@+id/diceImage"
+        app:layout_constraintTop_toBottomOf="@+id/list_view"
+        app:srcCompat="@drawable/ic_arrow_drop_down_white_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/upFab"
-        android:layout_width="wrap_content"
+        android:layout_width="56dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/downFab"
+        app:layout_constraintBottom_toBottomOf="@+id/diceImage"
+        app:layout_constraintLeft_toRightOf="@+id/diceImage"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/downFab"
-        app:srcCompat="@drawable/ic_arrow_drop_up_white_24dp"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginRight="20dp"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/list_view"
+        app:srcCompat="@drawable/ic_arrow_drop_up_white_24dp" />
 
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/score"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
+        android:text="@string/score"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -59,37 +49,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/highscore"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/list_view"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/scoreText" />
 
     <ImageView
         android:id="@+id/diceImage"
         android:layout_width="149dp"
         android:layout_height="139dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/d1"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        app:layout_constraintTop_toBottomOf="@+id/list_view"
+        app:srcCompat="@drawable/d1" />
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="0dp"
-        android:layout_height="352dp"
+        android:layout_height="0dp"
         android:layout_marginTop="69dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/diceImage"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        app:layout_constraintTop_toBottomOf="@+id/highscoreText" />
 
 </android.support.constraint.ConstraintLayout>
